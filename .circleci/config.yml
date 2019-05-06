@@ -35,10 +35,10 @@ jobs:
       - restore_dep
       - install_dep
       - save_dep
-      - lint
       - run:
           command: |
             go get golang.org/x/lint/golint
+      - lint
 
 workflows:
   build:
