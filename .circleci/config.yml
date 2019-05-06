@@ -32,10 +32,7 @@ jobs:
       - install_dep
       - save_dep
 
-  workflows:
-    build:
-      jobs:
-        - build:
-            filters:
-              tags:
-                only: /.*/
+workflows:
+  build:
+    jobs:
+      - build
