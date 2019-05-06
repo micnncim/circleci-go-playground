@@ -1,0 +1,36 @@
+version: 2.1
+executors:
+  default:
+    docker:
+      - image: circleci/golang:1.12
+        environment:
+          GO111MODULE: "on"
+    working_directory: /go/src/github.com/micnncim/circleci-go-playground
+commands:
+  restore_cache:
+    keys:
+      - go-mod-{{ checksum "go.sum" }}
+  save_cache:
+      key: go-mod-{{ checksum "go.sum" }}
+      paths:
+        - /go/pkg/mod/cache
+  install_dep:
+    name: Install dependencies
+    command: make dep
+jobs:
+  build:
+    executor:
+      name: default
+    steps:
+      - checkout
+      - restore_cache
+      - install_dep
+      - save_cache
+
+  workflows:
+    build:
+      jobs:
+        - build:
+            filters:
+              tags:
+                only: /.*/
