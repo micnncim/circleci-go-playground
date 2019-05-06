@@ -8,15 +8,17 @@ executors:
     working_directory: /go/src/github.com/micnncim/circleci-go-playground
 commands:
   restore_cache:
-    keys:
-      - go-mod-{{ checksum "go.sum" }}
+    steps:
+      keys:
+        - go-mod-{{ checksum "go.sum" }}
   save_cache:
+    steps:
       key: go-mod-{{ checksum "go.sum" }}
       paths:
         - /go/pkg/mod/cache
   install_dep:
-    name: Install dependencies
-    command: make dep
+    steps:
+      command: go mod download
 jobs:
   build:
     executor:
