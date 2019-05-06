@@ -37,7 +37,7 @@ jobs:
       - save_dep
       - run:
           command: |
-            go get golang.org/x/lint/golint
+            go get golang.org/x/tools/cmd/stringer
       - lint
 
 workflows:
