@@ -7,15 +7,17 @@ executors:
           GO111MODULE: "on"
     working_directory: /go/src/github.com/micnncim/circleci-go-playground
 commands:
-  restore_cache:
+  restore_mod:
     steps:
-      keys:
-        - go-mod-{{ checksum "go.sum" }}
-  save_cache:
+      - restore_cache:
+          keys:
+            - go-mod-{{ checksum "go.sum" }}
+  save_mod:
     steps:
-      key: go-mod-{{ checksum "go.sum" }}
-      paths:
-        - /go/pkg/mod/cache
+      - save_cache:
+          key: go-mod-{{ checksum "go.sum" }}
+          paths:
+            - /go/pkg/mod/cache
   install_dep:
     steps:
       command: go mod download
