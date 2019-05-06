@@ -22,6 +22,10 @@ commands:
     steps:
       - run:
           command: go mod download
+  lint:
+    steps:
+      - run:
+          command: golint $(go list ./...)
 jobs:
   build:
     executor:
@@ -31,6 +35,7 @@ jobs:
       - restore_dep
       - install_dep
       - save_dep
+      - lint
 
 workflows:
   build:
